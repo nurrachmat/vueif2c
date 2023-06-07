@@ -7,11 +7,58 @@
     <title>VueJS</title>
     <script src="https://docs.vuejs.id/js/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <div id="app">
         <h1>API Vercel</h1>
-        
+        <div v-for="data in dataMhs">
+            {{ data.npm }} 
+            {{ data.nama }}
+            {{ data.alamat }}
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>NPM</th>
+                    <th>Nama</th>
+                    <th>Alamat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="data in dataMhs">
+                    <td>{{ data.npm }}</td>
+                    <td>{{ data.nama }}</td>
+                    <td>{{ data.alamat }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    dataMhs: null,
+                }
+            },
+            methods: {
+                // method getMhs
+                getMhs: function () {
+                    axios.get('https://apiif2c-ten.vercel.app/mahasiswa')
+                    .then(response => {
+                        this.dataMhs = response.data
+                    })
+                },
+                // method postMhs
+            },
+            mounted () {
+                // panggil method getMhs()
+                this.getMhs()
+            }
+        })
+    </script>
 </body>
 </html>
